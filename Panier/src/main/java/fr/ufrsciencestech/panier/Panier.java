@@ -6,22 +6,23 @@
 package fr.ufrsciencestech.panier;
 
 import java.util.ArrayList;
+import java.util.Observable;
 import java.util.Scanner;
 
 /**
  *
  * @author tf872254
  */
-public class Panier {
+public class Panier extends Observable{
     private ArrayList<Orange> listeOrange;
-    private int capacitePanier = 5;
+    private int capacitePanier;
         
     public Panier(int cp){
         listeOrange = new ArrayList();
-        capacitePanier = capacitePositive(cp);
+        capacitePanier = cp;
     }
     
-    
+    /*
     private int capacitePositive(int cp){
         Scanner scn = new Scanner(System.in);
         while(cp<0.0){
@@ -29,6 +30,15 @@ public class Panier {
             cp = scn.nextInt();
         }
         return cp;
+    }
+    */
+    
+    public int getCapa(){
+        return this.capacitePanier;
+    }
+    
+    public int getNbOrange(){
+        return listeOrange.size();
     }
     
     public boolean estPlein(){
@@ -40,11 +50,19 @@ public class Panier {
     }
     
     public void ajouter(Orange o){
-        if(!estPlein()) listeOrange.add(o);
+        if(!estPlein()){
+            listeOrange.add(o);
+            setChanged();
+            notifyObservers();
+        }
     }
     
     public void retire(){
-        if(!estVide()) listeOrange.remove(listeOrange.size()-1);
+        if(!estVide()){
+            listeOrange.remove(listeOrange.size()-1);
+            setChanged();
+            notifyObservers();
+        }
     }
     
     public double getPrix(){
@@ -65,6 +83,9 @@ public class Panier {
         }
         
         this.listeOrange = new ArrayList(al);
+        
+        setChanged();
+        notifyObservers();
     }
 
     @Override
