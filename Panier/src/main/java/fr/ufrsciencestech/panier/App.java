@@ -12,7 +12,8 @@ public class App
         
         Panier p = new Panier(15);
         
-        View test = new View();
+        //View test = new View();
+        VueGAWT test = new VueGAWT();
         
         Controller control = new Controller(p);
         

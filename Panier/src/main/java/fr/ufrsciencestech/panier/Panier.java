@@ -5,6 +5,8 @@
  */
 package fr.ufrsciencestech.panier;
 
+import fr.ufrsciencestech.exceptions.PanierPleinException;
+import fr.ufrsciencestech.exceptions.OrangeNullException;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Scanner;
@@ -49,12 +51,18 @@ public class Panier extends Observable{
         return 0 == listeOrange.size();
     }
     
-    public void ajouter(Orange o){
+    public void ajouter(Orange o) throws PanierPleinException, OrangeNullException{
         if(!estPlein()){
-            listeOrange.add(o);
-            setChanged();
-            notifyObservers();
+            if(o==null){
+                throw new OrangeNullException();
+            }
+            else{
+                listeOrange.add(o);
+                setChanged();
+                notifyObservers();
+            }
         }
+        else throw new PanierPleinException();
     }
     
     public void retire(){

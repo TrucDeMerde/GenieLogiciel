@@ -29,6 +29,11 @@ public class Orange {
             prix = prixPositif(p);
     }
     
+    public Orange () {
+            origine = "Inconnue";
+            prix = prixPositif(1);
+    }
+    
     private double prixPositif(double p){
         Scanner scn = new Scanner(System.in);
         while(p<0.0){
